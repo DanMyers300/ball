@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const App = () => {
-  const [location, setLocation] = useState([100, 100]);
+  const [location, setLocation] = useState([100, 2000]);
   const [velocity, setVelocity] = useState([0, 0]);
   const [isDragging, setIsDragging] = useState(false);
   const [lastMousePosition, setLastMousePosition] = useState([0, 0]);
@@ -25,13 +25,16 @@ const App = () => {
       const [lastX, lastY] = lastMousePosition;
       const currentX = e.clientX;
       const currentY = e.clientY;
-
-      const deltaX = currentX - lastX;
-      const deltaY = currentY - lastY;
-
+  
+      const clampedX = Math.min(currentX, window.innerWidth / 2);
+      const clampedY = Math.max(currentY, window.innerHeight / 2);
+  
+      const deltaX = clampedX - lastX;
+      const deltaY = clampedY - lastY;
+  
       setVelocity([deltaX, deltaY]);
-      setLocation([currentX, currentY]);
-      setLastMousePosition([currentX, currentY]);
+      setLocation([clampedX, clampedY]);
+      setLastMousePosition([clampedX, clampedY]);
     }
   };
 
@@ -91,6 +94,9 @@ const App = () => {
             left: `${location[0]}px`,
           }}
           className="bg-red-700 w-12 h-12 rounded-full"
+        ></div>
+        <div
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white w-24 h-24 rounded-full"
         ></div>
       </main>
     </>
