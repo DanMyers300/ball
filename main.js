@@ -39,6 +39,18 @@ const handleMouseMove = (e) => {
 
     yVelocity = e.clientY - mouseStartY;
     mouseStartY = e.clientY;
+
+    if (xPosition >= containerWidth) {
+        xPosition = containerWidth;
+    } else if (xPosition <= 0) {
+        xPosition = 0;
+    }
+
+    if (yPosition >= containerHeight) {
+        yPosition = containerHeight
+    } else if (yPosition <= 0) {
+        yPosition = 0;
+    }
 };
 
 const handleMouseDown = (e) => {
